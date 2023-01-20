@@ -1,14 +1,18 @@
-#include <Arduino.h>
+#define F_CPU 20000000UL
 
-void setup()
-{
-  pinMode(LED_BUILTIN, OUTPUT);
-}
+#include <util/delay.h>
+#include <avr/io.h>
 
-void loop()
+int main(void)
 {
-  digitalWrite(LED_BUILTIN, HIGH);
-  delay(1000);
-  digitalWrite(LED_BUILTIN, LOW);
-  delay(1000);
+  DDRB  = 0xff;
+  PORTB = 0;
+
+  unsigned char b;
+  while(1)
+    {
+      b = PORTB;
+      PORTB = ~(b & 0xf0) | (b & 0x0f);
+      _delay_ms(500);
+  }
 }
